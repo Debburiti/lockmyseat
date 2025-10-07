@@ -28,9 +28,9 @@ Desenvolver uma solução prática que utilize **arquitetura distribuída**, apl
 
 Abra o terminal e execute:
 
-`bash`
-`git clone https://github.com/<seu-usuario>/lockmyseat.git`
-`cd lockmyseat`
+1. `bash`
+2. `git clone https://github.com/<seu-usuario>/lockmyseat.git`
+3. `cd lockmyseat`
 
 ### 2. Iniciar o servidor
 
