@@ -1,5 +1,5 @@
 # 🎬 **LOCKMYSEAT**  
-> Reserva de Assentos em Cinema  
+> Reserva de assentos em cinema  
 
 ## 🧠 **Disciplina**
 **Fundamentos de Computação Concorrente, Paralela e Distribuída**  
@@ -24,6 +24,33 @@ Desenvolver uma solução prática que utilize **arquitetura distribuída**, apl
 
 ## 🖥️ **Como executar**
 
+### 1. Clonar o repositório
+
+Abra o terminal e execute:
+
+`bash`
+`git clone https://github.com/<seu-usuario>/lockmyseat.git`
+`cd lockmyseat`
+
+### 2. Iniciar o servidor
+
+No diretório do projeto, execute:
+
+`python server.py`
+
+O servidor será iniciado em localhost:5555 (porta padrão). Ele ficará escutando conexões dos clientes e exibirá no terminal quando cada cliente se conectar.
+
+### 3. Iniciar um ou mais clientes
+
+Em outro terminal, execute:
+
+`python client.py`
+
+ou especifique o host e a porta manualmente:
+
+`python client.py localhost 5555`
+
+O cliente abrirá um menu interativo. Pressione `Ctrl + C` no terminal do servidor para finalizar a execução.
 
 ## 🧰 **Tecnologias Utilizadas**
 
