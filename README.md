@@ -36,7 +36,7 @@ Abra o terminal e execute:
 
 No diretório do projeto, execute:
 
-`python server.py`
+`python server/server.py`
 
 O servidor será iniciado em localhost:5555 (porta padrão). Ele ficará escutando conexões dos clientes e exibirá no terminal quando cada cliente se conectar.
 
@@ -44,13 +44,19 @@ O servidor será iniciado em localhost:5555 (porta padrão). Ele ficará escutan
 
 Em outro terminal, execute:
 
-`python client.py`
+`python client/client.py`
 
 ou especifique o host e a porta manualmente:
 
-`python client.py localhost 5555`
+`python client/client.py localhost 5555`
 
 O cliente abrirá um menu interativo. Pressione `Ctrl + C` no terminal do servidor para finalizar a execução.
+
+### 4. Executar Testes de Concorrência
+
+Em outro terminal (com servidor rodando), execute:
+
+`python test/test_concurrency.py`
 
 ## 🧰 **Tecnologias Utilizadas**
 
