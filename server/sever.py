@@ -16,21 +16,41 @@ class CinemaServer:
         # Base de dados simulada
         self.sessoes = {
             '1': {
-                'filme': 'Oppenheimer',
+                'filme': 'Harry Potter e a Pedra Filosofal',
                 'horario': '19:00',
                 'sala': 'A1',
                 'assentos': self._criar_assentos(5, 8)
             },
             '2': {
-                'filme': 'Barbie',
+                'filme': 'Quarteto Fantástico: Primeiros Passos',
                 'horario': '21:00',
                 'sala': 'A2',
                 'assentos': self._criar_assentos(5, 8)
             },
             '3': {
-                'filme': 'Duna: Parte 2',
+                'filme': 'Planeta dos Macacos: O Reinado',
                 'horario': '18:30',
                 'sala': 'B1',
+                'assentos': self._criar_assentos(6, 10)
+            },
+            
+            '4': {
+                'filme': 'O Auto da Compadecida',
+                'horario': '18:00',
+                'sala': 'B2',
+                'assentos': self._criar_assentos(6, 10)
+            },
+            
+            '4': {
+                'filme': 'Peter Pan',
+                'horario': '17:00',
+                'sala': 'C1',
+                'assentos': self._criar_assentos(4, 8)
+            },
+            '5': {
+                'filme': 'Bacurau',
+                'horario': '19:45',
+                'sala': 'C2',
                 'assentos': self._criar_assentos(6, 10)
             }
         }
