@@ -1,4 +1,3 @@
-
 import socket
 import threading
 import json
@@ -66,7 +65,6 @@ class CinemaServer:
         return assentos
     
     def start(self):
-        """Inicia o servidor"""
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.server_socket.bind((self.host, self.port))
@@ -97,7 +95,6 @@ class CinemaServer:
             self.server_socket.close()
     
     def handle_client(self, client_socket, client_id, address):
-        """Gerencia comunicação com um cliente específico"""
         print(f"Thread iniciada para Cliente #{client_id}")
         
         try:
@@ -120,7 +117,6 @@ class CinemaServer:
             print(f"\nCliente #{client_id} desconectado: {address}")
     
     def process_command(self, command, client_id):
-        """Processa comandos recebidos"""
         parts = command.strip().split()
         
         if not parts:
@@ -148,7 +144,6 @@ class CinemaServer:
             return "ERRO: Comando desconhecido"
     
     def listar_sessoes(self):
-        """Lista todas as sessões disponíveis"""
         resultado = "SESSOES\n"
         resultado += "=" * 60 + "\n"
         
@@ -200,7 +195,6 @@ class CinemaServer:
         return resultado
     
     def reservar_assento(self, sessao_id, assento, client_id):
-        """Reserva um assento (com sincronização)"""
         with self.lock:
             if sessao_id not in self.sessoes:
                 return "ERRO: Sessão não encontrada"
