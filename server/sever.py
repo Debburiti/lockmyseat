@@ -9,11 +9,9 @@ class CinemaServer:
         self.host = host
         self.port = port
         self.server_socket = None
-        
-        # Lock para sincronização
+
         self.lock = threading.Lock()
-        
-        # Base de dados simulada
+
         self.sessoes = {
             '1': {
                 'filme': 'Harry Potter e a Pedra Filosofal',
@@ -54,15 +52,14 @@ class CinemaServer:
                 'assentos': self._criar_assentos(6, 10)
             }
         }
-        
-        # Contador de clientes
+
         self.cliente_count = 0
         
     def _criar_assentos(self, fileiras, colunas):
         """Cria matriz de assentos (False = livre, True = ocupado)"""
         assentos = {}
         for i in range(fileiras):
-            letra = chr(65 + i)  # A, B, C...
+            letra = chr(65 + i) 
             for j in range(1, colunas + 1):
                 assento_id = f"{letra}{j}"
                 assentos[assento_id] = False
@@ -75,8 +72,8 @@ class CinemaServer:
         self.server_socket.bind((self.host, self.port))
         self.server_socket.listen(5)
         
-        print(f"🎬 Servidor de Cinema iniciado em {self.host}:{self.port}")
-        print(f"⏰ {datetime.now().strftime('%H:%M:%S')}")
+        print(f"Servidor de Cinema iniciado em {self.host}:{self.port}")
+        print(f"{datetime.now().strftime('%H:%M:%S')}")
         print("=" * 50)
         
         try:
@@ -85,9 +82,8 @@ class CinemaServer:
                 self.cliente_count += 1
                 client_id = self.cliente_count
                 
-                print(f"\n✅ Cliente #{client_id} conectado: {address}")
-                
-                # Cria thread para cada cliente
+                print(f"\n Cliente #{client_id} conectado: {address}")
+
                 client_thread = threading.Thread(
                     target=self.handle_client,
                     args=(client_socket, client_id, address)
@@ -96,35 +92,32 @@ class CinemaServer:
                 client_thread.start()
                 
         except KeyboardInterrupt:
-            print("\n\n🛑 Servidor encerrado pelo usuário")
+            print("\n\n Servidor encerrado pelo usuário")
         finally:
             self.server_socket.close()
     
     def handle_client(self, client_socket, client_id, address):
         """Gerencia comunicação com um cliente específico"""
-        print(f"🧵 Thread iniciada para Cliente #{client_id}")
+        print(f"Thread iniciada para Cliente #{client_id}")
         
         try:
             while True:
-                # Recebe comando do cliente
                 data = client_socket.recv(4096).decode('utf-8')
                 
                 if not data:
                     break
                 
-                print(f"\n📨 Cliente #{client_id}: {data}")
-                
-                # Processa comando
+                print(f"\nCliente #{client_id}: {data}")
+
                 response = self.process_command(data, client_id)
-                
-                # Envia resposta
+
                 client_socket.send(response.encode('utf-8'))
                 
         except Exception as e:
-            print(f"❌ Erro com Cliente #{client_id}: {e}")
+            print(f"Erro com Cliente #{client_id}: {e}")
         finally:
             client_socket.close()
-            print(f"\n❌ Cliente #{client_id} desconectado: {address}")
+            print(f"\nCliente #{client_id} desconectado: {address}")
     
     def process_command(self, command, client_id):
         """Processa comandos recebidos"""
@@ -182,16 +175,14 @@ class CinemaServer:
         resultado = f"ASSENTOS - {sessao['filme']} ({sessao['horario']})\n"
         resultado += "=" * 60 + "\n"
         resultado += "🟢 = Livre | 🔴 = Ocupado\n\n"
-        
-        # Organiza assentos por fileira
+
         assentos_por_fileira = {}
         for assento_id, ocupado in sessao['assentos'].items():
             fileira = assento_id[0]
             if fileira not in assentos_por_fileira:
                 assentos_por_fileira[fileira] = []
             assentos_por_fileira[fileira].append((assento_id, ocupado))
-        
-        # Monta visualização
+
         resultado += "    "
         num_colunas = len(assentos_por_fileira[list(assentos_por_fileira.keys())[0]])
         for i in range(1, num_colunas + 1):
@@ -205,12 +196,11 @@ class CinemaServer:
                 resultado += f"{simbolo} "
             resultado += "\n"
         
-        print(f"📊 Cliente #{client_id} consultou assentos da sessão {sessao_id}")
+        print(f"Cliente #{client_id} consultou assentos da sessão {sessao_id}")
         return resultado
     
     def reservar_assento(self, sessao_id, assento, client_id):
         """Reserva um assento (com sincronização)"""
-        # Usa lock para evitar condição de corrida
         with self.lock:
             if sessao_id not in self.sessoes:
                 return "ERRO: Sessão não encontrada"
@@ -221,13 +211,12 @@ class CinemaServer:
                 return f"ERRO: Assento {assento} não existe"
             
             if sessao['assentos'][assento]:
-                print(f"❌ Cliente #{client_id} tentou reservar {assento} (OCUPADO)")
+                print(f" Cliente #{client_id} tentou reservar {assento} (OCUPADO)")
                 return f"INDISPONIVEL: Assento {assento} já está ocupado"
-            
-            # Reserva o assento
+
             sessao['assentos'][assento] = True
             
-            print(f"✅ Cliente #{client_id} reservou: Sessão {sessao_id}, Assento {assento}")
+            print(f" Cliente #{client_id} reservou: Sessão {sessao_id}, Assento {assento}")
             return f"OK: Assento {assento} reservado com sucesso!\nFilme: {sessao['filme']}\nHorário: {sessao['horario']}\nSala: {sessao['sala']}"
 
 if __name__ == "__main__":
